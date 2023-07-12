@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<!-- Fix the money, fix the world, buy bitcoin. -->
+<head>
+  <meta name="author" content="Travis West / west.report">
+  <title>Google Chats Parser</title>
+  <style>
+    .conversation {
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+    .label {
+      font-weight: bold;
+      margin-right: 5px;
+    }
+  </style>
+  <script>
+    function handleFileSelect(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(event) {
+        const jsonContent = event.target.result;
+        const messages = JSON.parse(jsonContent).messages;
+
+        let conversationHTML = '';
+        messages.forEach(function(message) {
+          conversationHTML += '<div class="conversation">';
+          conversationHTML += '<p><span class="label">Name:</span>' + message.creator.name + '</p>';
+          conversationHTML += '<p><span class="label">Email:</span>' + message.creator.email + '</p>';
+          conversationHTML += '<p><span class="label">Created Date:</span>' + message.created_date + '</p>';
+
+          if (message.text) {
+            conversationHTML += '<p><span class="label">Text:</span>' + message.text + '</p>';
+          }
+
+          if (message.attached_files && message.attached_files.length > 0) {
+            conversationHTML += '<p><span class="label">Attached Files:</span></p>';
+            message.attached_files.forEach(function(file) {
+              if (file.export_name) {
+                conversationHTML += '<p>' + file.export_name + '</p>';
+              }
+            });
+          }
+
+          conversationHTML += '</div>';
+        });
+
+        document.getElementById('conversation-container').innerHTML = conversationHTML;
+      };
+
+      reader.readAsText(file);
+    }
+  </script>
+</head>
+<body>
+  <input type="file" id="file-input" accept=".json" onchange="handleFileSelect(event)">
+  <div id="conversation-container"></div>
+</body>
+<!-- We're probably good. -->
+</html>
