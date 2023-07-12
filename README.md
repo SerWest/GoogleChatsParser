@@ -1,3 +1,5 @@
+# Google Chats Parser
+
 This is a basic Google Chats Parser with images named and not displayed.
 
 -Download index.html and open it in a browser.
@@ -8,4 +10,6 @@ This is a basic Google Chats Parser with images named and not displayed.
 
 -Uploading can be done offline.
 
-Contact information is available at https://west.report.
+# Contact
+
+https://west.report
